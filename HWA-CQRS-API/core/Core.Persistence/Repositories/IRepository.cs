@@ -8,7 +8,7 @@ namespace Core.Persistence.Repositories;
 /// </summary>
 /// <typeparam name="TEntity">The type of entity managed by the repository.</typeparam>
 /// <typeparam name="TContext">The type of DbContext associated with the repository.</typeparam>
-public interface IRepository<TEntity, TContext>
+public interface IRepository<TEntity, TContext> 
     where TEntity : BaseEntity
     where TContext : DbContext
 {

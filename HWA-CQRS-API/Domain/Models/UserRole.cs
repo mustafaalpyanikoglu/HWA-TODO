@@ -11,12 +11,10 @@ public class UserRole : BaseEntity
     public virtual User User { get; set; }
     public virtual Role Role { get; set; }
 
-    // Empty constructor
     public UserRole()
     {
     }
 
-    // Full constructor
     public UserRole(int id, int userId, int roleId,
         DateTime createdDate, DateTime? deletedDate, DateTime? updatedDate) : this()
     {

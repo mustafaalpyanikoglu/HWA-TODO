@@ -6,11 +6,11 @@ using Application.Features.Assignment.Queries.GetList;
 using AutoMapper;
 using Domain.Models;
 
-namespace Application.Extensions;
+namespace Application.Profiles;
 
-public class MappingExtensions : Profile
+public class ApplicationMappingProfile : Profile
 {
-    public MappingExtensions()
+    public ApplicationMappingProfile()
     {
         #region Assignment mapping extensions
 
@@ -26,12 +26,6 @@ public class MappingExtensions : Profile
 
         CreateMap<Assignment, GetByIdAssignmentQuery>().ReverseMap();
         CreateMap<Assignment, GetListAssigmentItemDto>().ReverseMap();
-        #endregion
-
-        #region Auth mapping extensions
-
-        
-
         #endregion
     }
 }

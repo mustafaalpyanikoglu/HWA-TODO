@@ -7,17 +7,12 @@ namespace Application.Features.Assignment.Queries.GetList;
 
 public class GetListAssigmentQuery : IRequest<List<GetListAssigmentItemDto>>
 {
-    public class GetListAssigmentQueryHandler : IRequestHandler<GetListAssigmentQuery, List<GetListAssigmentItemDto>>
+    public class GetListAssigmentQueryHandler (IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
+        : IRequestHandler<GetListAssigmentQuery, List<GetListAssigmentItemDto>>
     {
-        private readonly Mapper _mapper;
-        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository;
+        private readonly IMapper _mapper = mapper;
+        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository = assignmentRepository;
 
-        public GetListAssigmentQueryHandler(Mapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
-        {
-            _mapper = mapper;
-            _assignmentRepository = assignmentRepository;
-        }
-        
         public async Task<List<GetListAssigmentItemDto>> Handle(GetListAssigmentQuery request, CancellationToken cancellationToken)
         {
             var assignments = await _assignmentRepository.GetListAsync(cancellationToken: cancellationToken);

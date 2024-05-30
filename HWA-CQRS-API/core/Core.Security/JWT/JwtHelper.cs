@@ -23,11 +23,11 @@ public class JwtHelper : ITokenHelper
     public AccessToken CreateToken(User user, IList<Role> roles)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
-        SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
-        SigningCredentials signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
-        JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, roles);
+        var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+        var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
+        var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, roles);
         JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
-        string? token = jwtSecurityTokenHandler.WriteToken(jwt);
+        var token = jwtSecurityTokenHandler.WriteToken(jwt);
 
         return new AccessToken { Token = token, ExpirationDate = _accessTokenExpiration };
     }

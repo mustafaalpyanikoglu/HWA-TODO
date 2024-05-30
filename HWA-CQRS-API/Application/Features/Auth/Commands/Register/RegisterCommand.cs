@@ -2,6 +2,7 @@
 using Application.Services.AuthService;
 using Core.Application.Dtos;
 using Core.Persistence.Repositories;
+using Core.Security.Hashing;
 using Domain.Models;
 using MediatR;
 using Persistence.Contexts;
@@ -22,12 +23,16 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         public async Task<RegisteredResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
+            
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password, out passwordHash, out passwordSalt);
 
             User newUser = new()
             {
                 Email = request.UserForRegisterDto.Email,
                 Username = request.UserForRegisterDto.Username,
-                Password = request.UserForRegisterDto.Password,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
                 CreatedDate = DateTime.UtcNow,
             };
             var createdUser = await _repository.AddAsync(newUser);

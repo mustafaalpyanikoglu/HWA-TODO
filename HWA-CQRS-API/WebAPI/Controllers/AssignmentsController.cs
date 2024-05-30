@@ -10,9 +10,14 @@ namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AssignmentsController(IMediator mediator) : Controller
+public class AssignmentsController: Controller
 {
-    private readonly IMediator _mediator = mediator;
+    private readonly IMediator _mediator;
+
+    public AssignmentsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
     
     [HttpGet("{Id}")]
     public async Task<IActionResult> GetById([FromRoute] GetByIdAssignmentQuery getByIdAssignmentQuery)

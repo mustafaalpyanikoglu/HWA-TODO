@@ -15,15 +15,16 @@ public class AuthManager : IAuthService
 
     public AuthManager(
         ITokenHelper tokenHelper,
-        IConfiguration configuration
-    )
+        IConfiguration configuration, IRepository<UserRole, AppDbContext> repository)
     {
         _tokenHelper = tokenHelper;
+        _repository = repository;
         _tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
     }
 
     public async Task<AccessToken> CreateAccessToken(User user)
     {
+
         IList<Role> roles = await _repository
             .Query()
             .AsNoTracking()
@@ -31,7 +32,7 @@ public class AuthManager : IAuthService
             .Select(p => new Role { Id = p.RoleId, Name = p.Role.Name })
             .ToListAsync();
 
-        AccessToken accessToken = _tokenHelper.CreateToken(user, roles);
+        var accessToken = _tokenHelper.CreateToken(user, roles ?? new List<Role>());
         return accessToken;
     }
 }

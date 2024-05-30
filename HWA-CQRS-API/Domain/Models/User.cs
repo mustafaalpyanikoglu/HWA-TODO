@@ -1,31 +1,30 @@
 ﻿using Core.Persistence;
-using Domain.Models;
 
 namespace Domain.Models;
 
 public class User : BaseEntity
 {
     public string Username { get; set; }
-    public string Password { get; set; }
-    public string Email { get; set; }
+    public string Email { get; set; } 
+    public byte[] PasswordSalt { get; set; }
+    public byte[] PasswordHash { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<Assignment> Assignments { get; set; }
 
-    // Empty constructor
     public User()
     {
         UserRoles = new HashSet<UserRole>();
         Assignments = new HashSet<Assignment>();
     }
 
-    // Full constructor
-    public User(int id, string username, string password, 
+    public User(int id, string username, byte[] passwordSalt, byte[] passwordHash, 
         string email, DateTime createdDate, DateTime? deletedDate, DateTime? updatedDate)
     {
         Id = id;
         Username = username;
-        Password = password;
         Email = email;
+        PasswordSalt = passwordSalt;
+        PasswordHash = passwordHash;
         CreatedDate = createdDate;
         DeletedDate = deletedDate;
         UpdatedDate = updatedDate;

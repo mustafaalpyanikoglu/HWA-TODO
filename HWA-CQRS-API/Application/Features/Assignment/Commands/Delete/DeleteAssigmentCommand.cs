@@ -10,19 +10,12 @@ public class DeleteAssigmentCommand : IRequest<DeletedAssigmentResponse>
     public int Id { get; set; }
 
 
-    public class DeleteAssigmentCommandHandler : IRequestHandler<DeleteAssigmentCommand, DeletedAssigmentResponse>
+    public class DeleteAssigmentCommandHandler (IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
+        : IRequestHandler<DeleteAssigmentCommand, DeletedAssigmentResponse>
     {
-        private readonly IMapper _mapper;
-        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository;
-
-
-        public DeleteAssigmentCommandHandler(IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
-        {
-            _mapper = mapper;
-            _assignmentRepository = assignmentRepository;
-        }
-
-
+        private readonly IMapper _mapper = mapper;
+        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository = assignmentRepository;
+        
         public async Task<DeletedAssigmentResponse> Handle(DeleteAssigmentCommand request, CancellationToken cancellationToken)
         {
             var assignment = await _assignmentRepository.FindAsync(request.Id);

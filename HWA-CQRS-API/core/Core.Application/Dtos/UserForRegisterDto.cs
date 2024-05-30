@@ -6,8 +6,6 @@ public class UserForRegisterDto : IDto
 {
     public required string Username { get; set; }
     public required string Email { get; set; }
-
-    [JsonIgnore]
     public string Password { get; set; }
 
     public UserForRegisterDto()

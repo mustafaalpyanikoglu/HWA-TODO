@@ -14,18 +14,12 @@ public class UpdateAssigmentCommand : IRequest<UpdatedAssigmentResponse>
     public string Description { get; set; }
     public string Status { get; set; }
 
-    public class UpdateAssigmentCommandHandler : IRequestHandler<UpdateAssigmentCommand, UpdatedAssigmentResponse>
+    public class UpdateAssigmentCommandHandler (IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
+        : IRequestHandler<UpdateAssigmentCommand, UpdatedAssigmentResponse>
     {
-        private readonly IMapper _mapper;
-        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository;
-
-        public UpdateAssigmentCommandHandler(IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
-        {
-            _mapper = mapper;
-            _assignmentRepository = assignmentRepository;
-        }
-
-
+        private readonly IMapper _mapper = mapper;
+        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository = assignmentRepository;
+        
         public async Task<UpdatedAssigmentResponse> Handle(UpdateAssigmentCommand request, CancellationToken cancellationToken)
         {
             var assignment = await _assignmentRepository.FindAsync(request.Id);

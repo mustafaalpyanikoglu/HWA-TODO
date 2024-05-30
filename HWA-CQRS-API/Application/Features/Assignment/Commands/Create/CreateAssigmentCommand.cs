@@ -14,17 +14,11 @@ public class CreateAssigmentCommand : IRequest<CreatedAssigmentResponse>
     public string Description { get; set; }
     public string Status { get; set; }
 
-    public class CreateAssigmentCommandHandler : IRequestHandler<CreateAssigmentCommand, CreatedAssigmentResponse>
+    public class CreateAssigmentCommandHandler (IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
+        : IRequestHandler<CreateAssigmentCommand, CreatedAssigmentResponse>
     {
-        private readonly IMapper _mapper;
-        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository;
-
-        public CreateAssigmentCommandHandler(IMapper mapper, IRepository<Domain.Models.Assignment, AppDbContext> assignmentRepository)
-        {
-            _mapper = mapper;
-            _assignmentRepository = assignmentRepository;
-        }
-
+        private readonly IMapper _mapper = mapper;
+        private readonly IRepository<Domain.Models.Assignment, AppDbContext> _assignmentRepository = assignmentRepository;
 
         public async Task<CreatedAssigmentResponse> Handle(CreateAssigmentCommand request, CancellationToken cancellationToken)
         {

@@ -8,13 +8,11 @@ public class Role : BaseEntity
 
     public virtual ICollection<UserRole> UserRoles { get; set; }
 
-    // Empty constructor
     public Role()
     {
         UserRoles = new HashSet<UserRole>();
     }
 
-    // Full constructor
     public Role(int id, string name,
         DateTime createdDate, DateTime? deletedDate, DateTime? updatedDate)
     {

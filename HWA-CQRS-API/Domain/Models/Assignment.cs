@@ -11,12 +11,10 @@ public class Assignment : BaseEntity
     // Navigation property for User
     public virtual User User { get; set; }
 
-    // Empty constructor
     public Assignment()
     {
     }
 
-    // Full constructor
     public Assignment(int id, string title, string description, string status, 
         DateTime createdDate, DateTime? updatedDate, DateTime? deletedDate, int userId)
     {

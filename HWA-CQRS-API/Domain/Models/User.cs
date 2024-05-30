@@ -1,4 +1,5 @@
 ﻿using Core.Persistence;
+using Domain.Models;
 
 namespace Domain.Models;
 
